@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Cristão — Conexão com Deus</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .quiz-container {
+        background: white;
+        width: 90%;
+        max-width: 450px;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .option {
+        background: #eaeaea;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: bold;
+    }
+
+    .option:hover {
+        background: #d2d2d2;
+    }
+
+    #result {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    /* --- CATALOGO --- */
+    .catalogo {
+        margin-top: 25px;
+        text-align: left;
+    }
+
+    .catalogo h3 {
+        margin-bottom: 10px;
+    }
+
+    .item-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 18px;
+        display: flex;
+        gap: 12px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.08);
+    }
+
+    .item-card img {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .item-info {
+        flex: 1;
+    }
+
+    .item-info h4 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .item-info p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .btn-link {
+        display: inline-block;
+        margin-top: 5px;
+        background: #4b6cff;
+        padding: 7px 10px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+    <h2 id="question">Carregando pergunta...</h2>
+    <div id="options"></div>
+    <div id="result"></div>
+</div>
+
+<script>
+const quiz = [
+    {
+        question: "1. Quando você sente ansiedade, qual é sua primeira reação?",
+        options: ["Orar e buscar paz", "Tentar resolver sozinho(a)", "Ficar paralisado(a)", "Pedir ajuda a alguém"],
+    },
+    {
+        question: "2. Você sente que sua fé tem aumentado ou diminuído nos últimos dias?",
+        options: ["Aumentado bastante", "A mesma coisa", "Oscilando muito", "Diminuído"],
+    },
+    {
+        question: "3. Com que frequência você lê a Bíblia?",
+        options: ["Todos os dias", "Algumas vezes na semana", "Raramente", "Quase nunca"],
+    },
+    {
+        question: "4. Você sente que Deus fala com você de alguma forma?",
+        options: ["Sim, claramente", "Às vezes", "Raramente", "Ainda não sei identificar"],
+    },
+    {
+        question: "5. Como está seu propósito de vida hoje?",
+        options: ["Muito claro", "Parcialmente claro", "Confuso", "Não consigo enxergar"],
+    },
+    {
+        question: "6. Quando algo difícil acontece, você:",
+        options: ["Entrega a Deus imediatamente", "Fica preocupado(a) antes de orar", "Só ora quando não tem saída", "Nem sempre lembra de falar com Deus"],
+    },
+    {
+        question: "7. Sua conexão com Deus hoje é:",
+        options: ["Forte e viva", "Moderada", "Fraca", "Quase inexistente"],
+    },
+    {
+        question: "8. Quanto você confia que Deus está cuidando da sua vida?",
+        options: ["Totalmente", "Muito", "Um pouco", "Tenho dúvidas"],
+    },
+    {
+        question: "9. Qual área da sua vida você mais deseja entregar a Deus?",
+        options: ["Ansiedade", "Fé / Espírito", "Família / Relacionamentos", "Propósito / Futuro"],
+    }
+];
+
+let currentQuestion = 0;
+
+function loadQuestion() {
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("question").textContent = quiz[currentQuestion].question;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    quiz[currentQuestion].options.forEach(option => {
+        const btn = document.createElement("div");
+        btn.className = "option";
+        btn.textContent = option;
+        btn.onclick = () => nextQuestion();
+        optionsDiv.appendChild(btn);
+    });
+}
+
+function nextQuestion() {
+    currentQuestion++;
+
+    if (currentQuestion < quiz.length) {
+        loadQuestion();
+    } else {
+        mostrarCatalogo();
+    }
+}
+
+function mostrarCatalogo() {
+    document.querySelector(".quiz-container").innerHTML = `
+        <h2>Quiz Finalizado!</h2>
+        <p id="result">Obrigado por participar. Deus abençoe sua caminhada espiritual!</p>
+
+        <div class="catalogo">
+            <h3>📘 Catálogo Cristão de Recursos</h3>
+
+            <!-- ITEM 1 -->
+            <div class="item-card">
+                <img src="https://i.ibb.co/M6z8qfR/biblia1.jpg">
+                <div class="item-info">
+                    <h4>Guia de Oração para Ansiedade</h4>
+                    <p>Um guia prático para acalmar a mente e fortalecer o espírito.</p>
+                    <a class="btn-link" href="#" target="_blank">Acessar</a>
+                </div>
+            </div>
+
+            <!-- ITEM 2 -->
+            <div class="item-card">
+                <img src="https://i.ibb.co/vqjRL8Q/biblia2.jpg">
+                <div class="item-info">
+                    <h4>Devocional de 7 Dias</h4>
+                    <p>Fortaleça sua fé com mensagens curtas e inspiradoras.</p>
+                    <a class="btn-link" href="#" target="_blank">Baixar</a>
+                </div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="item-card">
+                <img src="https://i.ibb.co/YTpH8vM/biblia3.jpg">
+                <div class="item-info">
+                    <h4>20 Promessas Bíblicas</h4>
+                    <p>Versículos que renovam a esperança em dias difíceis.</p>
+                    <a class="btn-link" href="#" target="_blank">Ver PDF</a>
+                </div>
+            </div>
+
+            <!-- ITEM 4 -->
+            <div class="item-card">
+                <img src="https://i.ibb.co/Zm2C9RY/biblia4.jpg">
+                <div class="item-info">
+                    <h4>Meditação Cristã para Dormir</h4>
+                    <p>Áudio guiado para trazer descanso à alma.</p>
+                    <a class="btn-link" href="#" target="_blank">Ouvir</a>
+                </div>
+            </div>
+
+            <!-- ITEM 5 -->
+            <div class="item-card">
+                <img src="https://i.ibb.co/JHpChb2/biblia5.jpg">
+                <div class="item-info">
+                    <h4>Estudos Bíblicos para Iniciantes</h4>
+                    <p>Aprenda a interpretar as Escrituras de forma simples.</p>
+                    <a class="btn-link" href="#" target="_blank">Acessar</a>
+                </div>
+            </div>
+
+        </div>
+    `;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

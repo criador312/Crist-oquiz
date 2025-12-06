@@ -52,7 +52,6 @@
         margin-top: 20px;
     }
 
-    /* --- CATALOGO --- */
     .catalogo {
         margin-top: 25px;
         text-align: left;
@@ -109,6 +108,37 @@
 </head>
 
 <body>
+
+<!-- 🔥 VERIFICAÇÃO DE STATUS DO SITE -->
+<script>
+async function checkStatus() {
+    try {
+        const res = await fetch("https://tkgstvdssnhlmrcwdjdg.supabase.co/functions/v1/site-status?site=calculadora");
+        const data = await res.json();
+
+        if (!data || data.status !== "ATIVO") {
+            document.body.innerHTML = `
+                <div style="
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    height:100vh;
+                    font-family:Arial;
+                    text-align:center;
+                    padding:20px;
+                ">
+                    <h1 style="color:red;">🚫 PAGAMENTO ATRASADO<br>O SITE ESTÁ BLOQUEADO</h1>
+                </div>
+            `;
+            return; // impede que o quiz carregue
+        }
+    } catch (err) {
+        console.error("Erro ao verificar status:", err);
+    }
+}
+checkStatus();
+</script>
+<!-- 🔥 FIM DA VERIFICAÇÃO -->
 
 <div class="quiz-container">
     <h2 id="question">Carregando pergunta...</h2>
@@ -190,23 +220,22 @@ function nextQuestion() {
 
 function mostrarCatalogo() {
     document.querySelector(".quiz-container").innerHTML = `
-         <h2>Quiz Finalizado!</h2>
-    <p id="result">Pelo seu resultado, esse é o melhor caminho para fortalecer sua fé neste momento.</p>
+        <h2>Quiz Finalizado!</h2>
+        <p id="result">Pelo seu resultado, esse é o melhor caminho para fortalecer sua fé neste momento.</p>
 
-    <div class="catalogo">
-      <h3>✨ Recomendações para sua Caminhada Espiritual</h3>
+        <div class="catalogo">
+            <h3>✨ Recomendações para sua Caminhada Espiritual</h3>
 
-      <div class="item-card">
-        <div class="item-info">
-         <h4>O Protocolo da Fé Mestra</h4>
-        <p>Os 100 Passos Práticos do Crente Comum ao Discípulo de Impacto</p>
+            <div class="item-card">
+                <div class="item-info">
+                    <h4>O Protocolo da Fé Mestra</h4>
+                    <p>Os 100 Passos Práticos do Crente Comum ao Discípulo de Impacto</p>
 
-          <p>Uma leitura guiada que revela, passo a passo, como fortalecer sua fé diária e viver um relacionamento mais profundo com Deus.</p>
+                    <p>Uma leitura guiada que revela, passo a passo, como fortalecer sua fé diária e viver um relacionamento mais profundo com Deus.</p>
 
-          <a href="https://abrir.link/ERWVa" target="_blank" class="btn-link">Acessar Leitura Guiada</a>
-        </div>
-      </div>
-
+                    <a href="https://abrir.link/ERWVa" target="_blank" class="btn-link">Acessar Leitura Guiada</a>
+                </div>
+            </div>
         </div>
     `;
 }
@@ -216,22 +245,3 @@ loadQuestion();
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
